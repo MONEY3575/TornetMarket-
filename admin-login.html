@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<!-- Admin Login Page for TornetMarket -->
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tornet Market ™ | Admin Login</title>
+  <meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport" />
+  <link rel="icon" href="assets/img/TornetMarketIcon.ico" type="image/x-icon" />
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      position: relative;
+      color: #fff;
+    }
+
+    .admin-banner {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      font-size: 1.5rem;
+      color: #ff0000;
+      font-weight: bold;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    .wrapper {
+      width: 450px;
+      border-radius: 8px;
+      padding: 40px;
+      text-align: center;
+      border: 1px solid rgba(255, 0, 0, 0.5);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      box-shadow: 0 0 20px rgba(255, 0, 0, 0.3);
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+    }
+
+    h2 {
+      font-size: 2rem;
+      margin-bottom: 10px;
+      color: #ff0000;
+    }
+
+    .subtitle {
+      font-size: 0.9rem;
+      color: #ccc;
+      margin-bottom: 30px;
+    }
+
+    .input-field {
+      position: relative;
+      border-bottom: 2px solid #ff0000;
+      margin: 20px 0;
+    }
+
+    .input-field label {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      transform: translateY(-50%);
+      color: #fff;
+      font-size: 16px;
+      pointer-events: none;
+      transition: 0.15s ease;
+    }
+
+    .input-field input {
+      width: 100%;
+      height: 40px;
+      background: transparent;
+      border: none;
+      outline: none;
+      font-size: 16px;
+      color: #fff;
+    }
+
+    .input-field input:focus ~ label,
+    .input-field input:valid ~ label {
+      font-size: 0.8rem;
+      top: 10px;
+      transform: translateY(-120%);
+    }
+
+    button {
+      background: #ff0000;
+      color: #fff;
+      font-weight: 600;
+      border: none;
+      padding: 12px 20px;
+      cursor: pointer;
+      border-radius: 3px;
+      font-size: 16px;
+      border: 2px solid transparent;
+      transition: 0.3s ease;
+      margin-top: 15px;
+    }
+
+    button:hover {
+      color: #000;
+      border-color: #ff0000;
+      background: rgba(255, 0, 0, 0.2);
+    }
+
+    .error {
+      color: #ff4444;
+      font-size: 0.9rem;
+      margin-top: 10px;
+      text-align: left;
+    }
+
+    .warning {
+      background: rgba(255, 0, 0, 0.1);
+      border: 1px solid #ff0000;
+      color: #ff6b6b;
+      padding: 15px;
+      border-radius: 5px;
+      margin-bottom: 20px;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="admin-banner">⚠️ ADMIN PANEL ⚠️</div>
+  
+  <div class="wrapper">
+    <h2>Admin Login</h2>
+    <p class="subtitle">Authorized Personnel Only</p>
+
+    <div class="warning">
+      ⚠️ This area is restricted. Unauthorized access will be logged and reported.
+    </div>
+    
+    <form id="adminLoginForm">
+      <div class="input-field">
+        <input type="text" id="username" required autocomplete="username">
+        <label>Admin Username</label>
+      </div>
+
+      <div class="input-field">
+        <input type="password" id="password" required autocomplete="current-password">
+        <label>Admin Password</label>
+      </div>
+
+      <div id="errorMessage" class="error"></div>
+
+      <button type="submit">Login as Admin</button>
+    </form>
+  </div>
+
+  <script src="admin-manager.js"></script>
+  <script>
+    const form = document.getElementById('adminLoginForm');
+    const errorMessage = document.getElementById('errorMessage');
+
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      errorMessage.textContent = '';
+
+      const username = document.getElementById('username').value.trim();
+      const password = document.getElementById('password').value;
+
+      const result = adminManager.adminLogin(username, password);
+
+      if (result.success) {
+        // Log admin access
+        console.log('Admin login: ' + username);
+        
+        // Redirect to admin dashboard
+        setTimeout(() => {
+          window.location.href = 'admin-dashboard.html';
+        }, 500);
+      } else {
+        errorMessage.textContent = result.message;
+      }
+    });
+  </script>
+</body>
+</html>
